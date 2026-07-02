@@ -1,6 +1,6 @@
 # .github/metadata.yaml
 # Triaged by AI-assisted bulk pass (2026-04-29).
-description: "Swift implementation of W3C CSSOM."
+description: "Swift implementation of W3C CSS Object Model (CSSOM)."
 topics:
   - standards
   - w3c
