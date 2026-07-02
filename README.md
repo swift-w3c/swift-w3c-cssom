@@ -22,7 +22,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/swift-w3c-cssom", from: "1.0.0")
+    .package(url: "https://github.com/swift-w3c/swift-w3c-cssom", from: "0.1.2")
 ]
 ```
 
@@ -187,8 +187,8 @@ This implementation follows:
 
 ## Related Packages
 
-- **[swift-w3c-css](https://github.com/coenttb/swift-w3c-css)** - Comprehensive W3C CSS implementation using swift-w3c-cssom
-- **[swift-whatwg-url](https://github.com/swift-standards/swift-whatwg-url)** - WHATWG URL Living Standard (for URL parsing, not serialization)
+- **[swift-w3c-css](https://github.com/swift-w3c/swift-w3c-css)** - Comprehensive W3C CSS implementation using swift-w3c-cssom
+- **[swift-whatwg-url](https://github.com/swift-whatwg/swift-whatwg-url)** - WHATWG URL Living Standard (for URL parsing, not serialization)
 
 ## Contributing
 
