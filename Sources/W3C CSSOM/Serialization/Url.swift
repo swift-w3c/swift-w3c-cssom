@@ -34,7 +34,9 @@ public struct Url: Sendable, Hashable {
     public init(_ value: String) {
         self.value = value
     }
+}
 
+extension Url {
     /// Creates a data URL for an embedded resource
     ///
     /// - Parameters:

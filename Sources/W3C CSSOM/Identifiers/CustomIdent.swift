@@ -35,7 +35,9 @@ public struct CustomIdent: Sendable, Hashable {
     public init(stringLiteral value: String) {
         self.init(value)
     }
+}
 
+extension CustomIdent {
     /// Creates a custom identifier with a safe value
     ///
     /// - Parameter value: A string to convert to a valid CSS identifier

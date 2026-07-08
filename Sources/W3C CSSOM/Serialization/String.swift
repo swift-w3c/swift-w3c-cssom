@@ -55,7 +55,9 @@ public struct CSSString: Sendable, Hashable {
     //    public init(_ value: String, quotes: Quotes) {
     //        self.value = value
     //    }
+}
 
+extension CSSString {
     /// Creates an empty CSS string value
     public static let empty = CSSString("")
 }
