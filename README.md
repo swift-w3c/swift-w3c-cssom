@@ -1,5 +1,7 @@
 # swift-w3c-cssom
 
+![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
+
 A spec-compliant Swift implementation of the W3C CSS Object Model (CSSOM) serialization algorithms.
 
 ## Overview
