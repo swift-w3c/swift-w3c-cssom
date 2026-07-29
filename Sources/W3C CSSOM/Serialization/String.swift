@@ -78,7 +78,7 @@ extension CSSString: CustomStringConvertible {
 /// String literal conversion
 extension CSSString: ExpressibleByStringLiteral {
     /// Creates a CSS string from a string literal
-    public init(stringLiteral value: StringLiteralType) {
+    public init(stringLiteral value: String) {
         self.init(value)
     }
 }

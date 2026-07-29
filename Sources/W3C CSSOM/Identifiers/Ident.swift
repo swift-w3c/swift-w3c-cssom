@@ -36,7 +36,7 @@ public struct Ident: Sendable, Hashable {
 }
 
 extension Ident: ExpressibleByStringLiteral {
-    public init(stringLiteral value: StringLiteralType) {
+    public init(stringLiteral value: String) {
         self.value = value
     }
 }

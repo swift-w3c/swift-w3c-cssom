@@ -68,7 +68,7 @@ extension Url: CustomStringConvertible {
 /// String literal conversion
 extension Url: ExpressibleByStringLiteral {
     /// Creates a URL from a string literal
-    public init(stringLiteral value: StringLiteralType) {
+    public init(stringLiteral value: String) {
         self.init(value)
     }
 }
