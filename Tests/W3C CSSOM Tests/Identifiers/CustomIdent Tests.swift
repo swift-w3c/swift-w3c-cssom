@@ -7,121 +7,113 @@ import Testing
 
 @testable import W3C_CSSOM
 
-// MARK: - Basic Functionality
-
 @Suite
-struct `CustomIdent - Initialization` {
-    @Test(arguments: [
-        ("my-animation", "my-animation"),
-        ("slideIn", "slideIn"),
-        ("header-main", "header-main"),
-        ("_private", "_private"),
-    ])
-    func `custom ident renders correctly`(value: String, expected: String) {
-        let ident = CustomIdent(value)
-        #expect(ident.description == expected)
-    }
-}
+struct `CustomIdent Tests` {
+    // MARK: - Unit
 
-@Suite
-struct `CustomIdent - CSS Property Usage` {
-    @Test func `custom ident in animation-name`() {
-        let animationName = "animation-name: \(CustomIdent("slideIn"))"
-        #expect(animationName == "animation-name: slideIn")
-    }
+    @Suite
+    struct Unit {
+        @Test(arguments: [
+            ("my-animation", "my-animation"),
+            ("slideIn", "slideIn"),
+            ("header-main", "header-main"),
+            ("_private", "_private"),
+        ])
+        func `custom ident renders correctly`(value: String, expected: String) {
+            let ident = CustomIdent(value)
+            #expect(ident.description == expected)
+        }
 
-    @Test func `custom ident in grid-area`() {
-        let gridArea = "grid-area: \(CustomIdent("header"))"
-        #expect(gridArea == "grid-area: header")
-    }
+        @Test func `string literal creates custom ident`() {
+            let ident: CustomIdent = "my-ident"
+            #expect(ident.description == "my-ident")
+        }
 
-    @Test func `custom ident in list-style-type`() {
-        let listStyle = "list-style-type: \(CustomIdent("custom-counter"))"
-        #expect(listStyle == "list-style-type: custom-counter")
-    }
-}
+        @Test func `equal idents are equal`() {
+            let ident1 = CustomIdent("test")
+            let ident2 = CustomIdent("test")
+            #expect(ident1 == ident2)
+        }
 
-// MARK: - Edge Cases
+        @Test func `different idents are not equal`() {
+            let ident1 = CustomIdent("test1")
+            let ident2 = CustomIdent("test2")
+            #expect(ident1 != ident2)
+        }
 
-@Suite
-struct `CustomIdent - Edge Cases` {
-    @Test func `single character ident`() {
-        let ident = CustomIdent("a")
-        #expect(ident.description == "a")
-    }
+        @Test func `idents can be used in sets`() {
+            let set: Set<CustomIdent> = [
+                CustomIdent("a"),
+                CustomIdent("b"),
+                CustomIdent("a"),  // duplicate
+            ]
+            #expect(set.count == 2)
+        }
 
-    @Test func `ident with numbers`() {
-        let ident = CustomIdent("item123")
-        #expect(ident.description == "item123")
-    }
+        @Test func `idents can be used as dictionary keys`() {
+            let dict: [CustomIdent: String] = [
+                CustomIdent("header"): "Header content",
+                CustomIdent("footer"): "Footer content",
+            ]
+            #expect(dict[CustomIdent("header")] == "Header content")
+        }
 
-    @Test func `ident with hyphens`() {
-        let ident = CustomIdent("my-custom-ident")
-        #expect(ident.description == "my-custom-ident")
-    }
-
-    @Test func `ident with underscores`() {
-        let ident = CustomIdent("my_custom_ident")
-        #expect(ident.description == "my_custom_ident")
-    }
-
-    @Test func `case sensitive`() {
-        let lower = CustomIdent("test")
-        let upper = CustomIdent("TEST")
-        #expect(lower.description != upper.description)
-        #expect(lower != upper)
-    }
-}
-
-// MARK: - Protocol Conformance
-
-@Suite
-struct `CustomIdent - String Literal Conformance` {
-    @Test func `string literal creates custom ident`() {
-        let ident: CustomIdent = "my-ident"
-        #expect(ident.description == "my-ident")
-    }
-}
-
-@Suite
-struct `CustomIdent - Hashable Conformance` {
-    @Test func `equal idents are equal`() {
-        let ident1 = CustomIdent("test")
-        let ident2 = CustomIdent("test")
-        #expect(ident1 == ident2)
+        @Test func `value property returns raw value`() {
+            let ident = CustomIdent("my-ident")
+            #expect(ident.value == "my-ident")
+        }
     }
 
-    @Test func `different idents are not equal`() {
-        let ident1 = CustomIdent("test1")
-        let ident2 = CustomIdent("test2")
-        #expect(ident1 != ident2)
+    // MARK: - Edge Case
+
+    @Suite
+    struct `Edge Case` {
+        @Test func `single character ident`() {
+            let ident = CustomIdent("a")
+            #expect(ident.description == "a")
+        }
+
+        @Test func `ident with numbers`() {
+            let ident = CustomIdent("item123")
+            #expect(ident.description == "item123")
+        }
+
+        @Test func `ident with hyphens`() {
+            let ident = CustomIdent("my-custom-ident")
+            #expect(ident.description == "my-custom-ident")
+        }
+
+        @Test func `ident with underscores`() {
+            let ident = CustomIdent("my_custom_ident")
+            #expect(ident.description == "my_custom_ident")
+        }
+
+        @Test func `case sensitive`() {
+            let lower = CustomIdent("test")
+            let upper = CustomIdent("TEST")
+            #expect(lower.description != upper.description)
+            #expect(lower != upper)
+        }
     }
 
-    @Test func `idents can be used in sets`() {
-        let set: Set<CustomIdent> = [
-            CustomIdent("a"),
-            CustomIdent("b"),
-            CustomIdent("a"),  // duplicate
-        ]
-        #expect(set.count == 2)
-    }
+    // MARK: - Integration
 
-    @Test func `idents can be used as dictionary keys`() {
-        let dict: [CustomIdent: String] = [
-            CustomIdent("header"): "Header content",
-            CustomIdent("footer"): "Footer content",
-        ]
-        #expect(dict[CustomIdent("header")] == "Header content")
-    }
-}
+    @Suite
+    struct Integration {
+        @Test func `custom ident in animation-name`() {
+            let animationName = "animation-name: \(CustomIdent("slideIn"))"
+            #expect(animationName == "animation-name: slideIn")
+        }
 
-// MARK: - Value Access
+        @Test func `custom ident in grid-area`() {
+            let gridArea = "grid-area: \(CustomIdent("header"))"
+            #expect(gridArea == "grid-area: header")
+        }
 
-@Suite
-struct `CustomIdent - Value Property` {
-    @Test func `value property returns raw value`() {
-        let ident = CustomIdent("my-ident")
-        #expect(ident.value == "my-ident")
+        @Test func `custom ident in list-style-type`() {
+            let listStyle = "list-style-type: \(CustomIdent("custom-counter"))"
+            #expect(listStyle == "list-style-type: custom-counter")
+        }
     }
 }
 
@@ -132,7 +124,7 @@ extension `Performance Tests` {
     struct `CustomIdent - Performance` {
         @Test(.timeLimit(.minutes(1)))
         func `custom ident creation 100K times`() {
-            for i in 0..<100_000 {
+            (0..<100_000).forEach { i in
                 _ = CustomIdent("ident\(i % 100)")
             }
         }
