@@ -111,7 +111,8 @@ struct `Url Tests` {
 
         @Test func `url with query parameters`() {
             let url = Url("https://example.com/api?param1=value1&param2=value2")
-            #expect(url.description == "url(\"https://example.com/api?param1=value1&param2=value2\")")
+            let expected = "url(\"https://example.com/api?param1=value1&param2=value2\")"
+            #expect(url.description == expected)
         }
 
         @Test func `url with fragment identifier`() {
