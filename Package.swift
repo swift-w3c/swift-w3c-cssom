@@ -10,7 +10,7 @@ let package = Package(
         .iOS(.v26),
         .tvOS(.v26),
         .watchOS(.v26),
-        .visionOS(.v26)
+        .visionOS(.v26),
     ],
     products: [
         .library(
@@ -26,13 +26,12 @@ let package = Package(
         .testTarget(
             name: "W3C CSSOM Tests",
             dependencies: [
-                "W3C CSSOM",
+                "W3C CSSOM"
             ]
         ),
     ],
     swiftLanguageModes: [.v6]
 )
-
 
 for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
     let ecosystem: [SwiftSetting] = [
