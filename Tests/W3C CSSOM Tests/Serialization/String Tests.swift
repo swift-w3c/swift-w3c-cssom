@@ -1,19 +1,13 @@
-// String Tests.swift
-// swift-w3c-cssom
-//
-// Tests for CSSOM CSSString type
-
 import Testing
 
 @testable import W3C_CSSOM
 
 @Suite
 struct `CSSString Tests` {
-    // MARK: - Unit
 
     @Suite
     struct Unit {
-        // Per CSSOM spec: strings are always serialized with double quotes
+
         @Test(arguments: [
             ("Hello, world!", "\"Hello, world!\""),
             ("Content", "\"Content\""),
@@ -24,7 +18,6 @@ struct `CSSString Tests` {
             #expect(str.description == expected)
         }
 
-        // Per CSSOM: double quotes are escaped as \"
         @Test func `double quotes are escaped`() {
             let str = CSSString("Say \"Hello\"")
             #expect(str.description == "\"Say \\\"Hello\\\"\"")
@@ -35,7 +28,6 @@ struct `CSSString Tests` {
             #expect(str.description == "\"\\\"Quote\\\" and \\\"another\\\"\"")
         }
 
-        // Per CSSOM: single quotes don't need escaping in double-quoted strings
         @Test func `single quotes remain literal`() {
             let str = CSSString("It's great!")
             #expect(str.description == "\"It's great!\"")
@@ -46,16 +38,13 @@ struct `CSSString Tests` {
             #expect(str.description == "\"'Quote' and 'another'\"")
         }
 
-        // Per CSSOM: backslashes are escaped as \\
         @Test func `backslashes are escaped`() {
             let str = CSSString("C:\\Users\\file.txt")
             #expect(str.description == "\"C:\\\\Users\\\\file.txt\"")
         }
 
-        // Per CSSOM: control characters (U+0001-U+001F, U+007F) are escaped as \<hex><space>
-
         @Test func `newline is escaped as code point`() {
-            // U+000A (newline) -> \a
+
             let str = CSSString("Line 1\nLine 2")
             #expect(str.description == "\"Line 1\\a Line 2\"")
         }
@@ -66,7 +55,7 @@ struct `CSSString Tests` {
         }
 
         @Test func `tab is escaped as code point`() {
-            // U+0009 (tab) -> \9
+
             let str = CSSString("Before\tAfter")
             #expect(str.description == "\"Before\\9 After\"")
         }
@@ -87,7 +76,7 @@ struct `CSSString Tests` {
         }
 
         @Test func `null character is replaced with replacement character`() {
-            // U+0000 -> U+FFFD
+
             let str = CSSString("Before\u{0000}After")
             #expect(str.description == "\"Before\u{FFFD}After\"")
         }
@@ -138,13 +127,11 @@ struct `CSSString Tests` {
             let set: Set<CSSString> = [
                 CSSString("a"),
                 CSSString("b"),
-                CSSString("a"),  // duplicate
+                CSSString("a"),
             ]
             #expect(set.count == 2)
         }
     }
-
-    // MARK: - Edge Case
 
     @Suite
     struct `Edge Case` {
@@ -163,7 +150,7 @@ struct `CSSString Tests` {
             let str = CSSString(longText)
             #expect(str.description.hasPrefix("\""))
             #expect(str.description.hasSuffix("\""))
-            #expect(str.description.count == 1002)  // 1000 chars + 2 quotes
+            #expect(str.description.count == 1002)
         }
 
         @Test func `string with all escape characters`() {
@@ -174,8 +161,6 @@ struct `CSSString Tests` {
             #expect(str.description.contains("\\1 "))
         }
     }
-
-    // MARK: - Integration
 
     @Suite
     struct Integration {
@@ -192,31 +177,29 @@ struct `CSSString Tests` {
         }
 
         @Test func `string in quotes property`() {
-            let open = CSSString("\u{201C}")  // left double quotation mark
-            let close = CSSString("\u{201D}")  // right double quotation mark
+            let open = CSSString("\u{201C}")
+            let close = CSSString("\u{201D}")
             let property = "quotes: \(open) \(close)"
             #expect(property == "quotes: \"\u{201C}\" \"\u{201D}\"")
         }
 
         @Test func `follows cssom string serialization rules`() {
-            // Per CSSOM: strings always use double quotes
+
             let str = CSSString("test")
             #expect(str.description.hasPrefix("\""))
             #expect(str.description.hasSuffix("\""))
         }
 
         @Test func `properly escapes required characters`() {
-            // Per CSSOM: NULL, control chars, double quotes, and backslashes must be escaped
+
             let str = CSSString("Test\"\\\u{0001}")
             let desc = str.description
-            #expect(desc.contains("\\\""))  // escaped double quote
-            #expect(desc.contains("\\\\"))  // escaped backslash
-            #expect(desc.contains("\\1 "))  // escaped control char
+            #expect(desc.contains("\\\""))
+            #expect(desc.contains("\\\\"))
+            #expect(desc.contains("\\1 "))
         }
     }
 }
-
-// MARK: - Performance
 
 extension `Performance Tests` {
     @Suite

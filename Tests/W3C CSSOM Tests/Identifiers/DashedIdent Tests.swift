@@ -1,15 +1,9 @@
-// DashedIdent Tests.swift
-// swift-w3c-cssom
-//
-// Tests for CSSOM DashedIdent type (CSS Custom Properties)
-
 import Testing
 
 @testable import W3C_CSSOM
 
 @Suite
 struct `DashedIdent Tests` {
-    // MARK: - Unit
 
     @Suite
     struct Unit {
@@ -79,7 +73,7 @@ struct `DashedIdent Tests` {
             let set: Set<DashedIdent> = [
                 DashedIdent("a"),
                 DashedIdent("b"),
-                DashedIdent("a"),  // duplicate
+                DashedIdent("a"),
             ]
             #expect(set.count == 2)
         }
@@ -102,8 +96,6 @@ struct `DashedIdent Tests` {
             #expect(ident.value == "primary-color")
         }
     }
-
-    // MARK: - Edge Case
 
     @Suite
     struct `Edge Case` {
@@ -134,8 +126,6 @@ struct `DashedIdent Tests` {
             #expect(lower != upper)
         }
     }
-
-    // MARK: - Integration
 
     @Suite
     struct Integration {
@@ -170,27 +160,25 @@ struct `DashedIdent Tests` {
         }
 
         @Test func `follows css variables naming convention`() {
-            // CSS variables must start with --
+
             let ident = DashedIdent("my-var")
             #expect(ident.description.hasPrefix("--"))
         }
 
         @Test func `can be used in custom property declaration`() {
-            // Custom properties are defined using -- prefix
+
             let prop = "\(DashedIdent("theme")): value"
             #expect(prop == "--theme: value")
         }
 
         @Test func `can be used in var function`() {
-            // Custom properties are referenced with var()
+
             let varUsage = DashedIdent("theme").var()
             #expect(varUsage.hasPrefix("var(--"))
             #expect(varUsage.hasSuffix(")"))
         }
     }
 }
-
-// MARK: - Performance
 
 extension `Performance Tests` {
     @Suite

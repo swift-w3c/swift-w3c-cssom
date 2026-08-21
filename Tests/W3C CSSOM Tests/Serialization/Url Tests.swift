@@ -1,20 +1,13 @@
-// Url Tests.swift
-// swift-w3c-cssom
-//
-// Tests for CSSOM Url type
-
 import Testing
 
 @testable import W3C_CSSOM
 
 @Suite
 struct `Url Tests` {
-    // MARK: - Unit
 
     @Suite
     struct Unit {
-        // Per CSSOM spec: URLs are serialized as url(<string>) where <string>
-        // uses the same serialization rules as CSS strings (always double quotes)
+
         @Test(arguments: [
             ("images/background.png", "url(\"images/background.png\")"),
             ("https://example.com/image.jpg", "url(\"https://example.com/image.jpg\")"),
@@ -25,12 +18,6 @@ struct `Url Tests` {
             let url = Url(path)
             #expect(url.description == expected)
         }
-
-        // Per CSSOM: URLs use string serialization which escapes:
-        // - NULL -> U+FFFD
-        // - Control characters (U+0001-U+001F, U+007F) -> \<hex><space>
-        // - Double quotes -> \"
-        // - Backslashes -> \\
 
         @Test func `spaces remain literal`() {
             let url = Url("images/my background.png")
@@ -48,7 +35,7 @@ struct `Url Tests` {
         }
 
         @Test func `single quotes remain literal`() {
-            // Single quotes don't need escaping in double-quoted strings
+
             let url = Url("images/my'photo'.jpg")
             #expect(url.description == "url(\"images/my'photo'.jpg\")")
         }
@@ -65,7 +52,7 @@ struct `Url Tests` {
 
         @Test func `newlines are escaped as code points`() {
             let url = Url("path\nwith\nnewlines")
-            // Newlines (U+000A) are control characters, escaped as \a
+
             #expect(url.description == "url(\"path\\a with\\a newlines\")")
         }
 
@@ -99,8 +86,6 @@ struct `Url Tests` {
             #expect(url1 != url2)
         }
     }
-
-    // MARK: - Edge Case
 
     @Suite
     struct `Edge Case` {
@@ -138,8 +123,6 @@ struct `Url Tests` {
         }
     }
 
-    // MARK: - Integration
-
     @Suite
     struct Integration {
         @Test func `url renders correctly in background-image property`() {
@@ -167,21 +150,19 @@ struct `Url Tests` {
         }
 
         @Test func `follows cssom url serialization`() {
-            // Per CSSOM: URL serialization is url(<serialized string>)
+
             let url = Url("path/to/file.jpg")
             #expect(url.description.hasPrefix("url(\""))
             #expect(url.description.hasSuffix("\")"))
         }
 
         @Test func `uses string serialization rules`() {
-            // Control characters should be escaped as code points
+
             let url = Url("file\u{0001}name.jpg")
             #expect(url.description.contains("\\1 "))
         }
     }
 }
-
-// MARK: - Performance
 
 extension `Performance Tests` {
     @Suite

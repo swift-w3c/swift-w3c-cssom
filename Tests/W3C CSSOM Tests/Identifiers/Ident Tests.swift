@@ -1,15 +1,9 @@
-// Ident Tests.swift
-// swift-w3c-cssom
-//
-// Tests for CSSOM Ident type (Base identifier)
-
 import Testing
 
 @testable import W3C_CSSOM
 
 @Suite
 struct `Ident Tests` {
-    // MARK: - Unit
 
     @Suite
     struct Unit {
@@ -45,7 +39,7 @@ struct `Ident Tests` {
             let set: Set<Ident> = [
                 Ident("a"),
                 Ident("b"),
-                Ident("a"),  // duplicate
+                Ident("a"),
             ]
             #expect(set.count == 2)
         }
@@ -63,8 +57,6 @@ struct `Ident Tests` {
             #expect(ident.value == "my-ident")
         }
     }
-
-    // MARK: - Edge Case
 
     @Suite
     struct `Edge Case` {
@@ -95,8 +87,6 @@ struct `Ident Tests` {
             #expect(lower != upper)
         }
     }
-
-    // MARK: - Integration
 
     @Suite
     struct Integration {
@@ -146,13 +136,13 @@ struct `Ident Tests` {
         }
 
         @Test func `follows identifier syntax`() {
-            // CSS identifiers are case-sensitive sequences of characters
+
             let ident = Ident("myIdent")
             #expect(ident.description == "myIdent")
         }
 
         @Test func `preserves case`() {
-            // CSS is case-sensitive for identifiers
+
             let lower = Ident("value")
             let upper = Ident("VALUE")
             let mixed = Ident("Value")
@@ -163,8 +153,6 @@ struct `Ident Tests` {
         }
     }
 }
-
-// MARK: - Performance
 
 extension `Performance Tests` {
     @Suite

@@ -1,15 +1,9 @@
-// CustomIdent Tests.swift
-// swift-w3c-cssom
-//
-// Tests for CSSOM CustomIdent type
-
 import Testing
 
 @testable import W3C_CSSOM
 
 @Suite
 struct `CustomIdent Tests` {
-    // MARK: - Unit
 
     @Suite
     struct Unit {
@@ -45,7 +39,7 @@ struct `CustomIdent Tests` {
             let set: Set<CustomIdent> = [
                 CustomIdent("a"),
                 CustomIdent("b"),
-                CustomIdent("a"),  // duplicate
+                CustomIdent("a"),
             ]
             #expect(set.count == 2)
         }
@@ -63,8 +57,6 @@ struct `CustomIdent Tests` {
             #expect(ident.value == "my-ident")
         }
     }
-
-    // MARK: - Edge Case
 
     @Suite
     struct `Edge Case` {
@@ -96,8 +88,6 @@ struct `CustomIdent Tests` {
         }
     }
 
-    // MARK: - Integration
-
     @Suite
     struct Integration {
         @Test func `custom ident in animation-name`() {
@@ -116,8 +106,6 @@ struct `CustomIdent Tests` {
         }
     }
 }
-
-// MARK: - Performance
 
 extension `Performance Tests` {
     @Suite

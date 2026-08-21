@@ -1,48 +1,14 @@
-/// Represents a CSS URL value.
-///
-/// The `Url` type is a pointer to a resource such as an image, video, CSS file, font file, or SVG.
-/// It is used in various CSS properties like `background-image`, `cursor`, `@import`, and more.
-///
-/// URLs are automatically serialized according to the CSSOM specification as `url("...")` with
-/// proper escaping of special characters.
-///
-/// Example:
-/// ```swift
-/// Url("images/background.png")     // Serializes to: url("images/background.png")
-/// Url("path with spaces.png")      // Serializes to: url("path with spaces.png")
-/// Url("data:image/png;base64,...")  // Serializes to: url("data:image/png;base64,...")
-/// ```
-///
-/// ## Serialization
-///
-/// Per CSSOM specification, URLs are serialized as `url(` + serialized string + `)`,
-/// where the string serialization applies the same escaping rules as CSS strings.
-///
-/// - Note: CSSOM always serializes URLs with double quotes.
-///
-/// - SeeAlso: [CSSOM: Serialize a URL](https://drafts.csswg.org/cssom/#serialize-a-url)
 public struct Url: Sendable, Hashable {
-    /// The raw URL string value (before serialization)
+
     public let value: String
 
-    /// Creates a new CSS URL value
-    ///
-    /// - Parameter value: The raw URL string
-    ///
-    /// The URL will be properly serialized (escaped and quoted) when converted
-    /// to a string via the `description` property.
     public init(_ value: String) {
         self.value = value
     }
 }
 
 extension Url {
-    /// Creates a data URL for an embedded resource
-    ///
-    /// - Parameters:
-    ///   - mimeType: The MIME type of the resource
-    ///   - base64Data: The Base64-encoded data
-    /// - Returns: A data URL
+
     public static func dataUrl(
         mimeType: String,
         base64Data: String
@@ -52,22 +18,15 @@ extension Url {
     }
 }
 
-/// Provides string conversion for CSS output
 extension Url: CustomStringConvertible {
-    /// Converts the URL to its properly serialized CSS representation
-    ///
-    /// Per CSSOM specification, a URL is serialized as `url(` + serialized string + `)`,
-    /// where the URL value is serialized using the same string serialization rules.
-    ///
-    /// - SeeAlso: [CSSOM: Serialize a URL](https://drafts.csswg.org/cssom/#serialize-a-url)
+
     public var description: String {
         return "url(\(serializeString(value)))"
     }
 }
 
-/// String literal conversion
 extension Url: ExpressibleByStringLiteral {
-    /// Creates a URL from a string literal
+
     public init(stringLiteral value: String) {
         self.init(value)
     }
