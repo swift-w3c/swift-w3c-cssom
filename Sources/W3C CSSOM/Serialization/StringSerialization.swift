@@ -2,7 +2,9 @@ func serializeString(_ string: String) -> String {
     var result = "\""
 
     for char in string {
-        let scalar = char.unicodeScalars.first!
+        guard let scalar = char.unicodeScalars.first else {
+            preconditionFailure("A Character always contains at least one Unicode scalar")
+        }
         let value = scalar.value
 
         if value == 0x0000 {

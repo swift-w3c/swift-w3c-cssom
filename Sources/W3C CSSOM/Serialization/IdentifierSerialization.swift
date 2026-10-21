@@ -7,7 +7,9 @@ func serializeIdentifier(_ identifier: String) -> String {
     let characters = Array(identifier)
 
     for (index, char) in characters.enumerated() {
-        let scalar = char.unicodeScalars.first!
+        guard let scalar = char.unicodeScalars.first else {
+            preconditionFailure("A Character always contains at least one Unicode scalar")
+        }
         let value = scalar.value
 
         if value == 0x0000 {
