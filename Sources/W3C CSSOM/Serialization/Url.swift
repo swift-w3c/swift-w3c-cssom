@@ -10,6 +10,8 @@ public struct Url: Sendable, Hashable {
 extension Url {
 
     public static func dataUrl(
+        // swift-linter:disable:next raw concept
+        // REASON: RFC_9110.MediaType owns this, but W3C CSSOM has no dependencies and swift-rfc-9110 would bring over a hundred packages into it and into all of CSS.
         mimeType: String,
         base64Data: String
     ) -> Url {
